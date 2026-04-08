@@ -118,7 +118,7 @@ B.Tech Computer Science Student
 
 🔗 LinkedIn: [linkedin.com/in/abhayverma5](https://www.linkedin.com/in/abhayverma5/)  
 
-🐦 X: [x.com/AbhayVerma9798](https://x.com/AbhayVerma9798)  
+ X: [x.com/AbhayVerma9798](https://x.com/AbhayVerma9798)  
 ---
 
 ## ⭐ Show Your Support
