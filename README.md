@@ -114,7 +114,7 @@ emailjs.send(
 **Abhay Verma**
 B.Tech Computer Science Student
 
-📧 [abhay.devx5@gmail.com](mailto:abhay.devx5@gmail.com)
+📧 Email: [abhay.devx5@gmail.com](mailto:abhay.devx5@gmail.com)
 🔗 LinkedIn: https://www.linkedin.com/in/abhayverma5/
 🐦 X: https://x.com/AbhayVerma9798
 
