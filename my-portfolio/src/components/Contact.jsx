@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 import { FiMail, FiPhone, FiSend, FiUser, FiMessageSquare } from 'react-icons/fi';
 import { FaLinkedinIn, FaGithub, FaXTwitter } from 'react-icons/fa6';
+import emailjs from '@emailjs/browser';
 
 // ── Static data ───────────────────────────────────────────────────────────────
 
@@ -149,8 +150,9 @@ const selectStyles = {
 
 function Contact() {
   const sectionRef = useRef(null);
+  const formRef = useRef(null);
 
-  const [form, setForm]     = useState({ name: '', email: '', subject: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [dialCode, setDialCode] = useState(COUNTRY_OPTIONS[0]);
   const [phoneNum, setPhoneNum] = useState('');
   const [status, setStatus] = useState('idle');   // idle | sending | sent
@@ -170,40 +172,82 @@ function Contact() {
   }, []);
 
   // ── Handlers ─────────────────────────────────────────────────────────────
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: '' }));
+    // Map EmailJS field names to state field names
+    const fieldMap = {
+      'user_name': 'name',
+      'user_email': 'email',
+      'subject': 'subject',
+      'message': 'message'
+    };
+    const stateField = fieldMap[name] || name;
+    setFormData((prev) => ({ ...prev, [stateField]: value }));
+    if (errors[stateField]) setErrors((prev) => ({ ...prev, [stateField]: '' }));
   };
 
   const validate = () => {
     const next = {};
-    if (!form.name.trim())  next.name    = 'Name is required.';
-    if (!form.email.trim()) next.email   = 'Email is required.';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+    if (!formData.name.trim())  next.name    = 'Name is required.';
+    if (!formData.email.trim()) next.email   = 'Email is required.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
                             next.email   = 'Enter a valid email.';
-    if (!form.message.trim()) next.message = 'Message cannot be empty.';
+    if (!formData.message.trim()) next.message = 'Message cannot be empty.';
     return next;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     const errs = validate();
-    if (Object.keys(errs).length) { setErrors(errs); return; }
+    if (Object.keys(errs).length) { 
+      setErrors(errs); 
+      return; 
+    }
 
     setStatus('sending');
-    const payload = {
-      ...form,
-      phone: `${dialCode.value} ${phoneNum}`.trim(),
-    };
-    console.log('[Contact] Form submitted:', payload);
 
-    setTimeout(() => {
+    // Send main email using emailjs.sendForm
+    emailjs.sendForm(
+      'service_8n7u7w8',
+      'template_4jnxxcs',
+      formRef.current,
+      'CvnAuj4V5E2kA2krR'
+    )
+    .then((result) => {
+      console.log('✅ Main email sent:', result.text);
+      
+      // Send auto-reply email
+      return emailjs.send(
+        'service_8n7u7w8',
+        'template_ue3ng1p',
+        {
+          user_name: formData.name,
+          user_email: formData.email,
+          subject: formData.subject || 'Thank you for reaching out',
+        },
+        'CvnAuj4V5E2kA2krR'
+      );
+    })
+    .then((result) => {
+      console.log('✅ Auto-reply sent:', result.text);
       setStatus('sent');
-      setForm({ name: '', email: '', subject: '', message: '' });
+      alert('✅ Message sent successfully! Check your email for confirmation.');
+      
+      // Reset form
+      setFormData({ name: '', email: '', subject: '', message: '' });
       setDialCode(COUNTRY_OPTIONS[0]);
       setPhoneNum('');
-    }, 900);
+      setErrors({});
+      
+      // Reset status after 3 seconds
+      setTimeout(() => setStatus('idle'), 3000);
+    })
+    .catch((error) => {
+      console.error('❌ EmailJS Error:', error);
+      setStatus('idle');
+      alert(`❌ Failed to send message: ${error.text || error.message || 'Unknown error'}. Please try again.`);
+    });
   };
 
   return (
@@ -264,7 +308,7 @@ function Contact() {
 
         {/* RIGHT */}
         <div className="ctc-right scroll-reveal reveal-right">
-          <form className="ctc-form" onSubmit={handleSubmit} noValidate>
+          <form className="ctc-form" ref={formRef} onSubmit={handleSubmit} noValidate>
 
             {/* Row: Name + Email */}
             <div className="ctc-row">
@@ -275,11 +319,13 @@ function Contact() {
                 <div className="ctc-input-wrap">
                   <span className="ctc-input-icon"><FiUser /></span>
                   <input
-                    id="ctc-name" name="name" type="text"
+                    id="ctc-name"
+                    name="user_name"
+                    type="text"
                     className="ctc-input ctc-input--iconed"
                     placeholder="Your name"
-                    value={form.name}
-                    onChange={handleChange}
+                    value={formData.name}
+                    onChange={handleInputChange}
                   />
                 </div>
                 {errors.name && <p className="ctc-error">{errors.name}</p>}
@@ -292,11 +338,13 @@ function Contact() {
                 <div className="ctc-input-wrap">
                   <span className="ctc-input-icon"><FiMail /></span>
                   <input
-                    id="ctc-email" name="email" type="email"
+                    id="ctc-email"
+                    name="user_email"
+                    type="email"
                     className="ctc-input ctc-input--iconed"
                     placeholder="your@email.com"
-                    value={form.email}
-                    onChange={handleChange}
+                    value={formData.email}
+                    onChange={handleInputChange}
                   />
                 </div>
                 {errors.email && <p className="ctc-error">{errors.email}</p>}
@@ -327,6 +375,12 @@ function Contact() {
                   onChange={(e) => setPhoneNum(e.target.value.replace(/[^0-9\s\-]/g, ''))}
                 />
               </div>
+              {/* Hidden input for EmailJS to capture combined phone number */}
+              <input
+                type="hidden"
+                name="user_phone"
+                value={phoneNum ? `${dialCode.value} ${phoneNum}`.trim() : ''}
+              />
             </div>
 
             {/* Subject */}
@@ -334,11 +388,13 @@ function Contact() {
               <label htmlFor="ctc-subject" className="ctc-label">Subject</label>
               <div className="ctc-input-wrap">
                 <input
-                  id="ctc-subject" name="subject" type="text"
+                  id="ctc-subject"
+                  name="subject"
+                  type="text"
                   className="ctc-input"
                   placeholder="What's this about?"
-                  value={form.subject}
-                  onChange={handleChange}
+                  value={formData.subject}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -351,12 +407,13 @@ function Contact() {
               <div className="ctc-input-wrap">
                 <span className="ctc-input-icon ctc-input-icon--top"><FiMessageSquare /></span>
                 <textarea
-                  id="ctc-message" name="message"
+                  id="ctc-message"
+                  name="message"
                   className="ctc-input ctc-textarea ctc-input--iconed"
                   placeholder="Write your message here..."
                   rows={5}
-                  value={form.message}
-                  onChange={handleChange}
+                  value={formData.message}
+                  onChange={handleInputChange}
                 />
               </div>
               {errors.message && <p className="ctc-error">{errors.message}</p>}
