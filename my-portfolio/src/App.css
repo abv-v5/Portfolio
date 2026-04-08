@@ -2051,3 +2051,370 @@ nav ul a:hover::after {
     font-size: 20px;
   }
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   COMPREHENSIVE RESPONSIVE IMPROVEMENTS
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── TABLET (1024px and below) ─────────────────────────────────── */
+@media (max-width: 1024px) {
+  /* Global section padding */
+  section {
+    padding: 50px 20px;
+  }
+
+  /* Navbar adjustments */
+  nav {
+    padding: 4px 30px;
+  }
+
+  nav h3 {
+    font-size: 26px;
+  }
+
+  nav ul {
+    gap: 20px;
+  }
+
+  /* Hero section */
+  .hero {
+    padding: 50px 20px;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+  }
+
+  h2 {
+    font-size: 26px;
+  }
+
+  .hero-buttons {
+    gap: 15px;
+  }
+
+  /* About section */
+  .about {
+    padding: 60px 20px;
+  }
+
+  .about-content {
+    gap: 40px;
+  }
+
+  .about-photo img {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+/* ── MOBILE (768px and below) ──────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Prevent horizontal scroll */
+  body {
+    overflow-x: hidden;
+  }
+
+  #root {
+    overflow-x: hidden;
+  }
+
+  /* Global section padding */
+  section {
+    padding: 40px 16px;
+  }
+
+  /* Navbar - mobile friendly */
+  nav {
+    padding: 8px 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  nav h3 {
+    font-size: 22px;
+    width: 100%;
+    text-align: center;
+  }
+
+  nav ul {
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+  }
+
+  nav li {
+    font-size: 14px;
+  }
+
+  /* Hero section - mobile */
+  .hero {
+    padding: 40px 16px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+    padding: 15px 0;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .status-badge {
+    font-size: 12px;
+    padding: 6px 14px;
+    margin-bottom: 20px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto 0;
+    gap: 12px;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+    font-size: 14px;
+  }
+
+  .scroll-down-btn {
+    margin-top: 20px;
+  }
+
+  /* About section - single column */
+  .about {
+    padding: 50px 16px;
+  }
+
+  .about h1 {
+    font-size: 36px;
+    margin-bottom: 35px;
+  }
+
+  .about-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .about-photo {
+    order: 1;
+  }
+
+  .about-text {
+    order: 2;
+    max-width: 100%;
+  }
+
+  .about-photo img {
+    width: 200px;
+    height: 200px;
+  }
+
+  .about-text p {
+    font-size: 15px;
+    text-align: left;
+  }
+
+  /* Skills section - already has mobile styles */
+  .skills-section {
+    padding: 60px 16px;
+  }
+
+  /* Projects section - already has mobile styles */
+  .proj-section {
+    padding: 60px 0 70px;
+  }
+
+  /* Education section - already has mobile styles */
+  .edu-section {
+    padding: 60px 16px 80px;
+  }
+
+  /* Contact section - already has mobile styles */
+  .ctc-section {
+    padding: 60px 16px 80px;
+  }
+
+  /* Footer - already has mobile styles */
+  .ftr-footer {
+    padding: 20px 16px;
+  }
+}
+
+/* ── SMALL MOBILE (480px and below) ────────────────────────────── */
+@media (max-width: 480px) {
+  /* Hero section - extra small */
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  /* Navbar - compact */
+  nav h3 {
+    font-size: 20px;
+  }
+
+  nav ul {
+    gap: 10px;
+  }
+
+  nav li {
+    font-size: 13px;
+  }
+
+  /* About section */
+  .about h1 {
+    font-size: 30px;
+  }
+
+  .about-photo img {
+    width: 180px;
+    height: 180px;
+  }
+
+  .about-text p {
+    font-size: 14px;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 12px 18px;
+    font-size: 13px;
+  }
+
+  .btn svg {
+    font-size: 16px;
+  }
+
+  /* Skills cards */
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+    gap: 8px;
+  }
+
+  .skill-card {
+    padding: 14px 6px 12px;
+  }
+
+  .skill-card-icon {
+    font-size: 26px;
+  }
+
+  .skill-card-name {
+    font-size: 10px;
+  }
+
+  /* Projects carousel */
+  .proj-card {
+    flex: 0 0 min(300px, 88vw);
+  }
+
+  .proj-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  /* Contact form */
+  .ctc-right {
+    padding: 18px 14px 16px;
+  }
+
+  .ctc-input {
+    height: 42px;
+    font-size: 13px;
+  }
+
+  .ctc-submit {
+    height: 44px;
+    font-size: 13px;
+  }
+
+  /* Footer */
+  .ftr-left,
+  .ftr-right {
+    font-size: 12px;
+  }
+
+  /* Scroll to top button */
+  .scroll-to-top-btn {
+    bottom: 90px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
+
+/* ── LANDSCAPE MOBILE (max-height: 500px) ──────────────────────── */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero {
+    padding: 30px 16px;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .hero-buttons {
+    margin-top: 15px;
+  }
+
+  .scroll-down-btn {
+    margin-top: 15px;
+  }
+
+  section {
+    padding: 30px 16px;
+  }
+}
+
+/* ── ENSURE NO HORIZONTAL OVERFLOW ─────────────────────────────── */
+@media (max-width: 768px) {
+  * {
+    max-width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Prevent text overflow */
+  h1, h2, h3, h4, h5, h6, p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Ensure containers don't overflow */
+  .hero,
+  .about,
+  .skills-section,
+  .proj-section,
+  .edu-section,
+  .ctc-section {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+}
