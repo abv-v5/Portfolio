@@ -279,6 +279,111 @@ nav ul a::after {
 nav ul a:hover::after {
   width: 100%;
 }
+
+/* ── Hamburger Menu Styles ──────────────────────────────────────── */
+
+/* Hide hamburger on desktop */
+.hamburger {
+  display: none;
+  font-size: 24px;
+  color: #0ff;
+  cursor: pointer;
+  z-index: 101;
+  transition: color 0.3s ease;
+}
+
+.hamburger:hover {
+  color: #fff;
+}
+
+/* Hide mobile menu on desktop */
+.mobile-menu {
+  display: none;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  /* Show hamburger icon */
+  .hamburger {
+    display: block;
+  }
+
+  /* Hide desktop menu */
+  .nav-menu {
+    display: none;
+  }
+
+  /* Mobile menu dropdown */
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 0 0 16px 16px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Active mobile menu */
+  .mobile-menu.active {
+    max-height: 400px;
+    opacity: 1;
+    padding: 20px 0;
+  }
+
+  /* Mobile menu items */
+  .mobile-menu li {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+  }
+
+  .mobile-menu a {
+    display: block;
+    padding: 14px 20px;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+  }
+
+  .mobile-menu a:hover {
+    color: #0ff;
+    background: rgba(0, 255, 255, 0.08);
+    border-left-color: #0ff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+  }
+
+  /* Remove the underline animation for mobile */
+  .mobile-menu a::after {
+    display: none;
+  }
+
+  /* Adjust nav padding for mobile */
+  nav {
+    padding: 12px 20px;
+  }
+
+  nav h3 {
+    font-size: 24px;
+  }
+}
+
 .hero {
   display: flex;
   flex-direction: column;
@@ -1093,6 +1198,7 @@ nav ul a:hover::after {
   max-width: 100%;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1932,12 +2038,34 @@ nav ul a:hover::after {
   }
   .ctc-phone-row {
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
   .ctc-phone-select {
     flex: none;
     width: 100%;
   }
+  
+  /* Ensure phone number input matches other inputs on mobile */
+  .ctc-phone-number {
+    width: 100%;
+    height: 44px;
+  }
+  
+  /* Ensure react-select matches input styling on mobile */
+  .ctc-phone-select .ctc-rs__control {
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+  
+  .ctc-phone-select .ctc-rs__value-container {
+    height: 44px;
+    padding: 0 12px;
+  }
+  
+  .ctc-phone-select .ctc-rs__indicators {
+    height: 44px;
+  }
+  
   .ctc-social-btn {
     flex: 1 1 100%;
   }
@@ -2125,31 +2253,7 @@ nav ul a:hover::after {
     padding: 40px 16px;
   }
 
-  /* Navbar - mobile friendly */
-  nav {
-    padding: 8px 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-  }
-
-  nav h3 {
-    font-size: 22px;
-    width: 100%;
-    text-align: center;
-  }
-
-  nav ul {
-    gap: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-  }
-
-  nav li {
-    font-size: 14px;
-  }
+  /* Navbar - handled by hamburger menu styles above */
 
   /* Hero section - mobile */
   .hero {
@@ -2256,6 +2360,13 @@ nav ul a:hover::after {
   /* Hero section - extra small */
   .hero h1 {
     font-size: 28px;
+    line-height: 1.4;
+  }
+  
+  /* Name on new line with spacing */
+  .hero-name {
+    display: block;
+    margin-top: 8px;
   }
 
   h2 {
@@ -2271,12 +2382,13 @@ nav ul a:hover::after {
     font-size: 20px;
   }
 
-  nav ul {
-    gap: 10px;
+  .hamburger {
+    font-size: 20px;
   }
 
-  nav li {
-    font-size: 13px;
+  .mobile-menu a {
+    font-size: 14px;
+    padding: 12px 16px;
   }
 
   /* About section */
@@ -2293,14 +2405,32 @@ nav ul a:hover::after {
     font-size: 14px;
   }
 
-  /* Buttons */
+  /* Hero buttons - fix alignment and make smaller */
+  .hero-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 20px auto 0 !important;
+    gap: 12px !important;
+    padding: 0 !important;
+  }
+
+  /* Buttons - smaller size and centered */
   .btn {
-    padding: 12px 18px;
-    font-size: 13px;
+    width: 80% !important;
+    max-width: 260px !important;
+    padding: 10px 16px !important;
+    font-size: 12px !important;
+    margin: 0 auto !important;
+    justify-content: center !important;
+    display: flex !important;
   }
 
   .btn svg {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   /* Skills cards */
@@ -2320,10 +2450,81 @@ nav ul a:hover::after {
   .skill-card-name {
     font-size: 10px;
   }
+  
+  /* Skills navigation buttons - make functional on mobile */
+  .skills-nav-item {
+    cursor: pointer;
+    pointer-events: auto;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 255, 255, 0.2);
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Ensure background doesn't block clicks */
+  .skills-bg-glow {
+    pointer-events: none;
+  }
+  
+  .skills-right-nav {
+    pointer-events: auto;
+    z-index: 10;
+  }
+  
+  /* Add scroll offset for mobile */
+  section {
+    scroll-margin-top: 80px;
+  }
+  
+  .skills-snap-slide {
+    scroll-margin-top: 80px;
+  }
 
   /* Projects carousel */
   .proj-card {
-    flex: 0 0 min(300px, 88vw);
+    flex: 0 0 min(280px, 85vw);
+    padding: 16px 16px 14px;
+    gap: 12px;
+  }
+  
+  .proj-carousel {
+    padding: 12px 16px 24px;
+  }
+  
+  .proj-card-header {
+    margin-bottom: 4px;
+  }
+  
+  .proj-card-icon-wrap {
+    font-size: 24px;
+  }
+  
+  .proj-card-preview {
+    aspect-ratio: 16 / 9;
+  }
+  
+  .proj-card-title {
+    font-size: 15px;
+  }
+  
+  .proj-card-subtitle {
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+  
+  .proj-card-desc {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  
+  .proj-card-tech {
+    gap: 6px;
+    padding-top: 2px;
+  }
+  
+  .proj-tech-tag {
+    font-size: 10px;
+    padding: 3px 8px;
   }
 
   .proj-arrow {
@@ -2338,12 +2539,48 @@ nav ul a:hover::after {
   }
 
   .ctc-input {
-    height: 42px;
-    font-size: 13px;
+    height: 46px;
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+  
+  .ctc-input--iconed {
+    padding-left: 38px;
+  }
+  
+  .ctc-textarea {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  
+  /* Phone field - increase height to match other inputs */
+  .ctc-phone-number {
+    height: 46px;
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+  
+  .ctc-phone-select .ctc-rs__control {
+    height: 46px !important;
+    min-height: 46px !important;
+  }
+  
+  .ctc-phone-select .ctc-rs__value-container {
+    height: 46px;
+    padding: 12px;
+    font-size: 14px;
+  }
+  
+  .ctc-phone-select .ctc-rs__indicators {
+    height: 46px;
+  }
+  
+  .ctc-phone-select .ctc-rs__single-value {
+    font-size: 14px;
   }
 
   .ctc-submit {
-    height: 44px;
+    height: 46px;
     font-size: 13px;
   }
 

@@ -107,13 +107,29 @@ function CategorySlide({ category, isActive }) {
 // ── RightNav ──────────────────────────────────────────────────────────────────
 
 function RightNav({ categories, activeId, snapContainerRef }) {
-  const scrollToCategory = useCallback((id) => {
+  const handleCategoryClick = useCallback((id) => {
     const container = snapContainerRef.current;
-    const target    = container?.querySelector(`[data-cat="${id}"]`);
-    if (container && target) {
-      // scroll within the snap container
+    const target = container?.querySelector(`[data-cat="${id}"]`);
+    
+    if (!container || !target) return;
+    
+    // Check if mobile
+    const isMobile = window.innerWidth <= 640;
+    
+    if (isMobile) {
+      // On mobile, just highlight the category without scrolling
+      const allSlides = container.querySelectorAll('.skills-snap-slide');
+      allSlides.forEach(slide => {
+        slide.classList.remove('slide-active');
+        slide.classList.add('slide-inactive');
+      });
+      
+      target.classList.remove('slide-inactive');
+      target.classList.add('slide-active');
+    } else {
+      // Desktop: scroll within the snap container
       container.scrollTo({
-        top:      target.offsetTop,
+        top: target.offsetTop,
         behavior: 'smooth',
       });
     }
@@ -126,7 +142,7 @@ function RightNav({ categories, activeId, snapContainerRef }) {
           <button
             key={cat.id}
             className={`skills-nav-item ${activeId === cat.id ? 'active' : ''}`}
-            onClick={() => scrollToCategory(cat.id)}
+            onClick={() => handleCategoryClick(cat.id)}
             title={cat.label}
             aria-label={cat.label}
           >

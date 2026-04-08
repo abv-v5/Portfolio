@@ -54,7 +54,7 @@ function Hero() {
     <section id="home" className="hero">
       <div className="status-badge">Available for opportunities</div>
 
-      <h1>Hello world! I'm <span className="highlight">Abhay Verma</span></h1>
+      <h1>Hello world! I'm <span className="highlight hero-name">Abhay Verma</span></h1>
 
       <h2>{displayedSubtitle}<span className="cursor">|</span></h2>
       <p>Turning Data into Smart AI Solutions</p>
