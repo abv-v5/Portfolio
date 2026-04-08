@@ -7,7 +7,7 @@ Designed to showcase my skills, projects, and experience with a clean UI and smo
 
 ## 🚀 Live Demo
 
-🔗 https://vabhay.vercel.app
+🔗 https://vabhay-dev.vercel.app
 
 ---
 
