@@ -1,16 +1,125 @@
-# React + Vite
+# 🌐 Abhay Verma – Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive personal portfolio website built using React.
+Designed to showcase my skills, projects, and experience with a clean UI and smooth animations.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Live Demo
 
-## React Compiler
+🔗 https://vabhay.vercel.app
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* ⚡ Modern UI with glowing cyber grid theme
+* 📱 Fully responsive (mobile, tablet, desktop)
+* 🎯 Smooth scroll and section-based navigation
+* 🧠 Skills section with category navigation
+* 📂 Projects carousel with tech stack tags
+* 🎓 Animated education timeline
+* 📬 Contact form with EmailJS integration
+* 🔄 Auto-reply email functionality
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend:** React.js, CSS3
+* **Animations:** Framer Motion
+* **Icons:** React Icons
+* **Email Service:** EmailJS
+* **Deployment:** Vercel
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+│── components/
+│   ├── Navbar.jsx
+│   ├── Hero.jsx
+│   ├── About.jsx
+│   ├── Skills.jsx
+│   ├── Projects.jsx
+│   ├── Education.jsx
+│   ├── Contact.jsx
+│   └── Footer.jsx
+│
+│── App.jsx
+│── main.jsx
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+1. Clone the repository
+
+```
+git clone https://github.com/abv-v5/Portfolio
+cd Portfolio
+```
+
+2. Install dependencies
+
+```
+npm install
+```
+
+3. Run the project
+
+```
+npm run dev
+```
+
+---
+
+## 📬 Contact Form Setup (EmailJS)
+
+1. Create an account on EmailJS
+
+2. Create:
+
+   * Service ID
+   * Template ID
+   * Public Key
+
+3. Replace values in your code:
+
+```
+emailjs.send(
+  "YOUR_SERVICE_ID",
+  "YOUR_TEMPLATE_ID",
+  formData,
+  "YOUR_PUBLIC_KEY"
+)
+```
+
+---
+
+## 📌 Future Improvements
+
+* 🌙 Dark/Light mode toggle
+* 🌍 Custom domain integration
+* 📊 Analytics integration
+* 🧾 Resume download tracking
+
+---
+
+## 🙌 Author
+
+**Abhay Verma**
+B.Tech Computer Science Student
+
+📧 [abhay.devx5@gmail.com](mailto:abhay.devx5@gmail.com)
+🔗 LinkedIn: https://www.linkedin.com/in/abhayverma5/
+🐦 X: https://x.com/AbhayVerma9798
+
+---
+
+## ⭐ Show Your Support
+
+If you like this project, give it a ⭐ on GitHub!
