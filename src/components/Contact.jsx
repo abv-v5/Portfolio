@@ -361,7 +361,7 @@ function Contact() {
                     value={dialCode}
                     onChange={setDialCode}
                     styles={selectStyles}
-                    isSearchable
+                    isSearchable={false}
                     placeholder="Country"
                     classNamePrefix="ctc-rs"
                     menuPlacement="auto"
