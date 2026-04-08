@@ -322,7 +322,7 @@ nav {
   padding: 4px 60px;
   position:sticky;
   top: 0;
-  background: var(--bg-card);
+  background: #0a0a0a;
   box-sizing: border-box;
   transition: all 0.3s ease;
   z-index: 100;
@@ -330,7 +330,7 @@ nav {
 }
 
 nav.scrolled {
-  background: var(--bg-card);
+  background: #0a0a0a;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
@@ -443,9 +443,9 @@ nav ul a:hover::after {
     top: 100%;
     left: 0;
     right: 0;
-    background: var(--bg-card);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: #0a0a0a;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     border-bottom: 1px solid var(--border-color);
     border-radius: 0 0 16px 16px;
     padding: 0;
@@ -456,7 +456,7 @@ nav ul a:hover::after {
     overflow: hidden;
     opacity: 0;
     transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease, background-color 0.4s ease;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
   }
 
   /* Active mobile menu */
@@ -3313,6 +3313,73 @@ nav ul a:hover::after {
 [data-theme="light"] .ctc-textarea::placeholder {
   color: var(--text-muted) !important;
   opacity: 0.55;
+}
+
+/* ── Phone country code dropdown (react-select) ───────────────── */
+[data-theme="light"] .ctc-phone-select .ctc-rs__control {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 9px !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+[data-theme="light"] .ctc-phone-select .ctc-rs__control:hover {
+  border-color: var(--border-hover) !important;
+}
+
+[data-theme="light"] .ctc-phone-select .ctc-rs__control--is-focused {
+  border-color: var(--accent-primary) !important;
+  box-shadow: 0 0 0 3px var(--accent-glow) !important;
+}
+
+[data-theme="light"] .ctc-phone-select .ctc-rs__single-value {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .ctc-phone-select .ctc-rs__placeholder {
+  color: var(--text-muted) !important;
+}
+
+[data-theme="light"] .ctc-phone-select .ctc-rs__input,
+[data-theme="light"] .ctc-phone-select .ctc-rs__input input {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .ctc-phone-select .ctc-rs__indicator svg {
+  fill: var(--text-muted) !important;
+  color: var(--text-muted) !important;
+}
+
+[data-theme="light"] .ctc-phone-select .ctc-rs__indicator-separator {
+  background: var(--border-color) !important;
+}
+
+[data-theme="light"] .ctc-phone-select .ctc-rs__menu {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow-lg) !important;
+  border-radius: 10px !important;
+}
+
+[data-theme="light"] .ctc-phone-select .ctc-rs__menu-list {
+  background: var(--bg-card) !important;
+  border-radius: 10px !important;
+}
+
+[data-theme="light"] .ctc-phone-select .ctc-rs__option {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .ctc-phone-select .ctc-rs__option:hover,
+[data-theme="light"] .ctc-phone-select .ctc-rs__option--is-focused {
+  background: var(--accent-light) !important;
+  color: var(--accent-secondary) !important;
+}
+
+[data-theme="light"] .ctc-phone-select .ctc-rs__option--is-selected {
+  background: var(--accent-primary) !important;
+  color: #ffffff !important;
 }
 
 /* Submit */
