@@ -66,6 +66,20 @@ const CATEGORIES = [
   },
 ];
 
+// Helper function to add highlight to category titles
+function getCategoryTitle(label) {
+  if (label === 'Programming Languages') {
+    return <>Programming <span className="highlight">Languages</span></>;
+  } else if (label === 'Web Technologies') {
+    return <>Web <span className="highlight">Technologies</span></>;
+  } else if (label === 'Tools & Frameworks') {
+    return <>Tools & <span className="highlight">Frameworks</span></>;
+  } else if (label === 'Domains') {
+    return <><span className="highlight">Domains</span></>;
+  }
+  return label;
+}
+
 // ── SkillCard ─────────────────────────────────────────────────────────────────
 
 function SkillCard({ name, Icon, color, index }) {
@@ -93,7 +107,7 @@ function CategorySlide({ category, isActive }) {
     >
       {/* inner wrapper constrains width and centres content */}
       <div className="skills-slide-inner">
-        <h3 className="skills-cat-title">{category.label}</h3>
+        <h3 className="skills-cat-title">{getCategoryTitle(category.label)}</h3>
         <div className="skills-grid">
           {category.skills.map((skill, i) => (
             <SkillCard key={skill.name} {...skill} index={i} />
@@ -117,7 +131,13 @@ function RightNav({ categories, activeId, snapContainerRef }) {
     const isMobile = window.innerWidth <= 640;
     
     if (isMobile) {
-      // On mobile, just highlight the category without scrolling
+      // On mobile, scroll to the category AND highlight it
+      container.scrollTo({
+        top: target.offsetTop,
+        behavior: 'smooth',
+      });
+      
+      // Also update the visual state
       const allSlides = container.querySelectorAll('.skills-snap-slide');
       allSlides.forEach(slide => {
         slide.classList.remove('slide-active');
@@ -203,17 +223,38 @@ function Skills() {
     const container = snapContainerRef.current;
     if (!container) return;
 
+    const isMobile = window.innerWidth <= 768;
+
     const obs = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.dataset.cat);
+        if (isMobile) {
+          // On mobile, find the most visible category
+          let maxRatio = 0;
+          let mostVisibleEntry = null;
+
+          entries.forEach((entry) => {
+            if (entry.intersectionRatio > maxRatio) {
+              maxRatio = entry.intersectionRatio;
+              mostVisibleEntry = entry;
+            }
+          });
+
+          if (mostVisibleEntry && mostVisibleEntry.intersectionRatio > 0.3) {
+            setActiveId(mostVisibleEntry.target.dataset.cat);
           }
-        });
+        } else {
+          // Desktop behavior - unchanged
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveId(entry.target.dataset.cat);
+            }
+          });
+        }
       },
       {
-        root:       container,   // observe within snap container, NOT the page
-        threshold:  0.55,        // slide must be >55% visible to be "active"
+        root: isMobile ? null : container,   // Mobile: observe viewport, Desktop: snap container
+        threshold: isMobile ? [0, 0.3, 0.5, 0.7, 1] : 0.55,  // Multiple thresholds for mobile
+        rootMargin: isMobile ? '-20% 0px -20% 0px' : '0px',  // Center focus on mobile
       }
     );
 
@@ -228,19 +269,82 @@ function Skills() {
     const container = snapContainerRef.current;
     if (!container) return;
 
+    // Check if mobile
+    const isMobile = window.innerWidth <= 768;
+
     const obs = new IntersectionObserver(
       (entries) => entries.forEach((e) => {
         if (e.isIntersecting) e.target.classList.add('is-visible');
       }),
       {
-        root:       container,
-        threshold:  0.15,
-        rootMargin: '0px 0px -20px 0px',
+        root: isMobile ? null : container,  // On mobile, observe relative to viewport
+        threshold: 0.15,
+        rootMargin: isMobile ? '0px 0px -60px 0px' : '0px 0px -20px 0px',
       }
     );
 
     const cards = container.querySelectorAll('.scroll-reveal');
     cards.forEach((c) => obs.observe(c));
+    return () => obs.disconnect();
+  }, []);
+
+  // ── Scroll-reveal for category slides on mobile ──────────────────────────────
+  useEffect(() => {
+    const container = snapContainerRef.current;
+    if (!container) return;
+
+    // Only apply on mobile
+    const isMobile = window.innerWidth <= 768;
+    if (!isMobile) return;
+
+    const slides = container.querySelectorAll('.skills-snap-slide');
+    
+    // Initially show only the first category (Languages)
+    slides.forEach((slide, index) => {
+      if (index === 0) {
+        slide.classList.add('mobile-revealed');
+        const cards = slide.querySelectorAll('.scroll-reveal');
+        cards.forEach((card) => card.classList.add('is-visible'));
+      } else {
+        slide.classList.add('mobile-hidden');
+      }
+    });
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.2) {
+            // Reveal the category permanently
+            entry.target.classList.remove('mobile-hidden');
+            entry.target.classList.add('mobile-revealed');
+            
+            // Trigger card animations with stagger
+            const cards = entry.target.querySelectorAll('.scroll-reveal');
+            cards.forEach((card, idx) => {
+              setTimeout(() => {
+                card.classList.add('is-visible');
+              }, idx * 60);
+            });
+            
+            // Stop observing once revealed (performance optimization)
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,  // Observe relative to viewport on mobile
+        threshold: [0, 0.2, 0.5],
+        rootMargin: '0px 0px -100px 0px',
+      }
+    );
+
+    // Observe all slides except the first one (already visible)
+    slides.forEach((slide, index) => {
+      if (index > 0) {
+        obs.observe(slide);
+      }
+    });
+    
     return () => obs.disconnect();
   }, []);
 

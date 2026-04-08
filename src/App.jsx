@@ -1,3 +1,4 @@
+import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/NavbarTemp';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -13,17 +14,19 @@ function App() {
   
 
   return (
-    <div>
-      <Cursor />
-      <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Education />
-      <Contact />
-      <Footer />
-    </div>
+    <ThemeProvider>
+      <div>
+        <Cursor />
+        <Navbar />
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Education />
+        <Contact />
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 }
 

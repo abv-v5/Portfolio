@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import ThemeToggle from './ThemeToggle';
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,9 +43,12 @@ function Navbar() {
         <li><a href="#contact" onClick={closeMenu}>Contact</a></li>
       </ul>
 
-      {/* Hamburger Icon */}
-      <div className="hamburger" onClick={toggleMenu}>
-        {isMenuOpen ? <FaTimes /> : <FaBars />}
+      {/* Theme Toggle & Hamburger */}
+      <div className="nav-actions">
+        <ThemeToggle />
+        <div className="hamburger" onClick={toggleMenu}>
+          {isMenuOpen ? <FaTimes /> : <FaBars />}
+        </div>
       </div>
 
       {/* Mobile Menu */}
