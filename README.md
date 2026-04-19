@@ -30,7 +30,7 @@ Designed to showcase my skills, projects, and experience with a clean UI and smo
 * **Animations:** Framer Motion
 * **Icons:** React Icons
 * **Email Service:** EmailJS
-* **Deployment:** Vercel
+* **Deployment:** Netlify
 
 ---
 
