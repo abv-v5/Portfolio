@@ -66,7 +66,7 @@ function Hero() {
         <a href="#contact" className="btn secondary-btn">
           <FaEnvelope /> Contact Me
         </a>
-        <a href="/abhayvermacv.pdf" download className="btn tertiary-btn">
+        <a href="/abhayvermacv.pdf" target="_blank" rel="noopener noreferrer" className="btn tertiary-btn">
           <FaDownload /> Download Resume
         </a>
       </div>
